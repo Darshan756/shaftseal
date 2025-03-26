@@ -1,471 +1,118 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block css %}
-{{ block.super }}
-<style>
-    /* Global Styles */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-       
-    }
-
-    /* Navbar */
-   
-   
-    .logo {
-        width: 120px;
-    }
-
-    .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 20px;
-    }
-
-    .nav-links a {
-        color:black;
-        text-decoration: none;
-        font-weight: bold;
-        font-size:20px;
-        transition: 0.3s;
-    }
-
-    .nav-links a:hover {
-        text-decoration: underline;
-    }
-
-    .auth-buttons button {
-        background-color: white;
-        color: #4CAF50;
-        border: none;
-        border-radius: 5px;
-        padding: 8px 15px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .auth-buttons button:hover {
-        background-color: #45a049;
-        color: white;
-    }
-
-    /* Modal Styles */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        padding: 30px 20px;
-        border-radius: 10px;
-        background: linear-gradient(90deg, rgb(136, 132, 214) 0%, rgb(136, 136, 161) 35%, rgba(0,212,255,1) 100%);;
-
-        width: 100%;
-        max-width: 450px;
-        box-shadow: 0 6px 10px rgba(3, 3, 3, 0.2);
-    }
-
-    .form-container h2 {
-        text-align: center;
-        color: #ffffff;
-        margin-bottom: 20px;
-    }
-
-    .form-container label {
-        display: block;
-        font-weight: bold;
-        margin-top: 15px;
-        color: #333;
-    }
-
-    .form-container input {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .form-container button {
-        margin-top: 20px;
-        color: white;
-        border: none;
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);;
-        margin-left: 20%;
-        border-radius: 5px;
-        width:50%;
-        padding: 10px 15px;
-    
-
-                    font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .form-container button:hover {
-        background: linear-gradient(90deg, rgb(136, 132, 214) 0%, rgb(136, 136, 161) 35%, rgba(0,212,255,1) 100%);;
-    }
-
-    .generated-info {
-        margin-top: 20px;
-        padding: 15px;
-        background-color: #e7f3e7;
-        border-left: 5px solid #4CAF50;
-        font-weight: bold;
-    }
-
-    /* Responsive Layout for Form Fields */
-    .form-container .flex-group {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-    }
-
-    .form-container .flex-group input {
-        flex: 1;
-    }
-    .hero-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 50px 20px;
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);;
-
-        color: #ffffff;
-    }
-    
-    .hero-content {
-        text-align: center;
-        max-width: 800px;
-        margin-bottom: 30px;
-    }
-    
-    .seal {
-        font-size: 40px;
-        font-weight: bold;
-        color: white;
-    }
-    
-    .subtitle {
-        color: lightgray;
-        margin-top: 9px;
-        font-size: 18px;
-    }
-    
-    .description {
-        color: lightgray;
-        font-size: 16px;
-        margin-top: 10px;
-    }
-    
-    .learn-more-btn {
-        padding: 12px 25px;
-        background: linear-gradient(90deg, rgb(136, 132, 214) 0%, rgb(136, 136, 161) 35%, rgba(0,212,255,1) 100%);;
-        border: none;
-        border-radius: 5px;
-        color: #fff;
-        cursor: pointer;
-        margin-top: 15px;
-        font-size: 16px;
-        transition: background 0.3s;
-    }
-    
-    .learn-more-btn:hover {
-        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);;
-    }
-    
-    .search-icon-container {
-        position: relative;
-        margin: 20px auto;
-        width: 90%;
-        max-width: 400px;
-    }
-    
-    #search-input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 25px;
-        outline: none;
-        transition: box-shadow 0.3s ease;
-        font-size: 16px;
-    }
-    
-    #search-input:focus {
-        box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
-    }
-    
-    .search-icon {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        color: #888;
-        font-size: 1.2em;
-    }
-    
-    .dropdown {
-        position: absolute;
-width: 100vh; /* Puri screen ki width */
-
-top: 100%;
-left: 0;
-right: 0;
-background: linear-gradient(145deg, #ffffff, #d1e3ff);
-border: 1px solid #ccc;
-border-radius: 15px;
-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-display: none;
-z-index: 1000;
-padding: 50px;
-animation: fadeIn 0.3s ease-in-out;
-        animation: fadeIn 0.3s ease-in-out;
-    }
-    
-    .cards-container {
-        display: flex;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 15px;
-    }
-    
-    .card {
-        width: 300px;
-        height: 200px;
-        backdrop-filter: blur(10px);
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 1rem;
-        transition: all 0.3s ease-in-out;
-    }
-    .card:hover {
-        transform: scale(1.1);
-        backdrop-filter: blur(20px);
-        background: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-    .btncard{
-        text-align: center;
-        border: none;
-        border-radius: 10px;
-        padding: 5px;
-        text-align: center;
-        height: 150px;
-        width: 150px;
-       margin-bottom: 10px;
-       margin: 7px;
-       
-    }
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .hero-image img {
-        width: 100%;
-        max-width: 500px;
-        border-radius: 20px;
-        height: auto;
-    }
-    
-    @media (max-width: 768px) {
-        .hero-section {
-            flex-direction: column;
-            padding: 30px 20px;
-        }
-    
-        .hero-content {
-            max-width: 90%;
-        }
-    
-        .learn-more-btn {
-            font-size: 14px;
-        }
-    
-        .search-icon-container {
-            max-width: 350px;
-        }
-    }
-
-
-    /* Responsive Styles */
-    @media (max-width: 768px) {
-        .nav-links {
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .auth-buttons {
-            margin-top: 10px;
-        }
-
-        .logo {
-            width: 90px;
-        }
-    }
-
-    /* Footer Section */
-.footer {
-text-align: center;
-padding: 20px;
-background: #000;
-color: #fff;
-}
-
-.social-links {
-list-style: none;
-display: flex;
-justify-content: center;
-gap: 15px;
-}
-
-.social-links a {
-text-decoration: none;
-color: #fff;
-font-weight: bold;
-}
-.maincontent{
-text-align:center
-}
-</style>
+    {{block.super}}
 {% endblock css %}
     
- 
-    
-    {% block body %}
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1>About Us</h1>
-           
-            <p class="subtitle">
-                Shaft & Seal is a specialized engineering solutions provider dedicated to enhancing energy 
-                efficiency in pumping systems. With expertise in pumps, boiler feed pumps, drive shafts, 
-                mechanical seals, and high-quality pump spares, we offer cutting-edge solutions that optimize 
-                performance, reduce energy consumption, and extend the life of industrial machinery
-            </p>
-            <button class="learn-more-btn">Learn More</button>
-    
-        
-        </div>
-      <section>
-        <div class="container my-5">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <!-- Product 1 -->
-                <div class="col">
-                    <div class="card ">
-                        <div class="card-body">
-                            <h2>Energy-Efficient Pumping System</h2>
-                            <p>Precision-engineered solutions for high-pressure applications.</p>
-                        </div>
-    
-                    </div>
-                </div>
-        
-                <!-- Product 2 -->
-                <div class="col">
-                    <div class="card ">
-                        <div class="card-body">
-                            <h2>Boiler Feed Pumps</h2>
-                            <p>Precision-engineered solutions for high-pressure applications.</p>
-    
-                        </div>
-    
-    
-                    </div>
-                </div>
-        
-                <!-- Product 3 -->
-                <div class="col">
-                    <div class="card ">
-                        <div class="card-body">
-                            <h2>Drive Shafts</h2>
-                            <p>Manufacturing and supplying robust shafts for pumps and other machinery.</p>
-    
-                        </div>
-    
-    
-                    </div>
-                </div>
-        
-                <div class="col">
-                    <div class="card ">
-                        <div class="card-body">
-                            <h2>Drive Shafts</h2>
-                            <p>Manufacturing and supplying robust shafts for pumps and other machinery.</p>
-    
-                        </div>
-    
-    
-                    </div>
-                </div>
-        
-                <div class="col">
-                    <div class="card ">
-                        <div class="card-body">
-                            <h2>Drive Shafts</h2>
-                            <p>Manufacturing and supplying robust shafts for pumps and other machinery.</p>
-    
-                        </div>
-    
-    
-                    </div>
-                </div>
-        
-                <!-- Add more products here -->
-        
-            </div>
-        </div>
-      </section>
-        <section class="container my-5">
-            <div class="maincontent">
-                <h1 >The Promoters</h1>
 
-                <div class="row">
-                   <p>
-                    Shaft & Seal is led by an experienced energy auditor with over 20 years of expertise in pumping systems. 
-                    Our leadership brings deep technical knowledge in pump efficiency optimization, system audits, and engineering solutions, ensuring clients receive the most effective and reliable products.
-    With a commitment to innovation, sustainability, and cost-effective engineering, Shaft & Seal is your trusted partner for all pumping system needs.
-                   </p>
-    
-                </div>
-            </div>
-           
-        </section>
+{% block body %}
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="seal">About Us</h1>
        
-      
-        <div >
-        </div>
+        <p class="subtitle">
+            Shaft & Seal is a specialized engineering solutions provider dedicated to enhancing energy 
+            efficiency in pumping systems. With expertise in pumps, boiler feed pumps, drive shafts, 
+            mechanical seals, and high-quality pump spares, we offer cutting-edge solutions that optimize 
+            performance, reduce energy consumption, and extend the life of industrial machinery
+        </p>
+        <button class="learn-more-btn">Learn More</button>
 
     
-        
+    </div>
+  <section>
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- Product 1 -->
+            <div class="col">
+                <div class="card ">
+                    <div class="card-body">
+                        <h4>Energy-Efficient Pumping System</h4>
+                        <p>Precision-engineered solutions for high-pressure applications.</p>
+                    </div>
+
+                </div>
+            </div>
+    
+            <!-- Product 2 -->
+            <div class="col">
+                <div class="card ">
+                    <div class="card-body">
+                        <h4>Boiler Feed Pumps</h4>
+                        <p>Precision-engineered solutions for high-pressure applications.</p>
+
+                    </div>
+
+
+                </div>
+            </div>
+    
+            <!-- Product 3 -->
+            <div class="col">
+                <div class="card ">
+                    <div class="card-body">
+                        <h4>Drive Shafts</h4>
+                        <p>Manufacturing and supplying robust shafts for pumps and other machinery.</p>
+
+                    </div>
+
+
+                </div>
+            </div>
+    
+            <div class="col">
+                <div class="card ">
+                    <div class="card-body">
+                        <h4>Drive Shafts</h4>
+                        <p>Manufacturing and supplying robust shafts for pumps and other machinery.</p>
+
+                    </div>
+
+
+                </div>
+            </div>
+    
+            <div class="col">
+                <div class="card ">
+                    <div class="card-body">
+                        <h4>Drive Shafts</h4>
+                        <p>Manufacturing and supplying robust shafts for pumps and other machinery.</p>
+
+                    </div>
+
+
+                </div>
+            </div>
+    
+            <!-- Add more products here -->
+    
+        </div>
+    </div>
+  </section>
+    <section class="container my-5">
+        <div class="maincontent">
+            <h2 >The Promoters</h2>
+
+            <div class="row">
+               <p>
+                Shaft & Seal is led by an experienced energy auditor with over 20 years of expertise in pumping systems. 
+                Our leadership brings deep technical knowledge in pump efficiency optimization, system audits, and engineering solutions, ensuring clients receive the most effective and reliable products.
+With a commitment to innovation, sustainability, and cost-effective engineering, Shaft & Seal is your trusted partner for all pumping system needs.
+               </p>
+
+            </div>
+        </div>
+       
     </section>
-    
-    {% endblock body %}
-        
-    
    
+  
+    <div >
+    </div>
+
+
+    
+</section>
+{% endblock body %}
+    
